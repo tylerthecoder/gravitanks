@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html,body {
+                margin:0px;
+                padding:0px;
+				overflow:hidden;         
+            }
+            #gameDiv {
+                position: absolute;
+            }
+			#controlsDiv {
+				position:fixed;
+				bottom:0px;
+				right:0px;
+				width:100%;
+				height:60px;
+                display:none;
+			}
+			#pointsDiv {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				top:0px;
+				left:0px;
+				right:0px;
+				pointer-events: none;
+				color:white;
+				text-align: center;
+				font-size:2em;
+				text-shadow: 0px 0px 30px yellow;
+			}
+			.section {
+				color:white;
+				text-align:center;
+				font-weight:bold;
+				padding-right: 6px;
+				padding-left: 6px;
+				height:100%;
+                float:left;
+			}
+			input {
+				border: solid 1px #dcdcdc;
+				transition: box-shadow 0.3s, border 0.3s;
+			}
+			input:focus, input.focus {
+				border: solid 1px #707070;
+				box-shadow: 0 0 5px 3px #969696;
+			}
+			
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+					/* display: none; <- Crashes Chrome on hover */
+					-webkit-appearance: none;
+					margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+			}
+        </style>
+        <title>Gravitanks</title>
+        <link rel="stylesheet" href="w3.css">
+        <script src="Vector.js"></script>
+        <script src="Thing.js"></script>
+        <script src="player.js"></script>
+        <script src="planet.js"></script>
+        <script src="map.js"></script>
+        <script src="proj.js"></script>
+        <script src="main.js"></script>
+    </head>
+    <body onload="setup()">
+        <canvas id="gameDiv"></canvas>
+        <div id="controlsDiv">
+			<div class="w3-col m3 section">
+				<header class="w3-container w3-red">
+					<label>Power:</label>
+				</header>
+				<div class="w3-Indigo">
+					<button class="w3-btn" onclick="controllingPlayer.inputs.power--">&lt;</button>
+					<input id="powerInput" type="number" value="50" onfocus="editing.power = true" onblur = "editing.power = false" />
+					<button class="w3-btn" onclick="controllingPlayer.inputs.power++">&gt;</button>
+				</div>
+			</div>
+			<div class="w3-col m2 section">
+				<header class="w3-container w3-red">
+					<label>Weapon:</label>
+				</header>
+				<div class="w3-Indigo" style="height:100%">
+					<select id="weaponSelect" onfocus="editing.weapon = true" onblur = "editing.weapon = false" ></select>
+				</div>
+			</div>
+			<div class="w3-col m2 section">
+				<button onclick="controllingPlayer.shoot(controllingPlayer.inputs)" class="w3-btn w3-red w3-block" style="height:100%">Fire</button>
+			</div>
+			<div class="w3-col m3 section">
+				<header class="w3-red">
+					<label>Angle:</label>
+				</header>
+				<div class="w3-Indigo">
+					<button class="w3-btn" onclick="controllingPlayer.inputs.angle--">&lt;</button>
+					<input id="angleInput" type="number" step="0.1" value="50" onfocus="editing.angle = true" onblur = "editing.angle = false"/>
+					<button class="w3-btn" onclick="controllingPlayer.inputs.angle++">&gt;</button>
+				</div>
+			</div>
+			<div class="w3-col m2 section">
+				<header class="w3-container w3-red">
+					<label>Move:</label>
+				</header>
+				<div class="w3-Indigo" style="height:100%">
+					<button onclick="controllingPlayer.moveOnPlanet(-10)">&lt;</button>
+					<button onclick="controllingPlayer.moveOnPlanet(10)">&gt;</button>
+				</div>
+			</div>
+		</div>
+		<div id="pointsDiv"></div>
+    </body>
+</html>
